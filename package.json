@@ -1,0 +1,24 @@
+{
+  "name": "gitz",
+  "version": "1.0.0",
+  "description": "Various silly helper commands for the git CLI.",
+  "main": "index.js",
+  "scripts": {
+    "test": "gitz -v"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/scottyeck/gitz.git"
+  },
+  "keywords": [
+    "git",
+    "CLI",
+    "node"
+  ],
+  "author": "Scotty Eckenthal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scottyeck/gitz/issues"
+  },
+  "homepage": "https://github.com/scottyeck/gitz#readme"
+}
