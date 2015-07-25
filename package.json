@@ -20,5 +20,16 @@
   "bugs": {
     "url": "https://github.com/scottyeck/gitz/issues"
   },
-  "homepage": "https://github.com/scottyeck/gitz#readme"
+  "homepage": "https://github.com/scottyeck/gitz#readme",
+  "bin": {
+    "gitz": "index.js"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-notify": "^0.4.1",
+    "load-grunt-tasks": "^3.2.0",
+    "underscore-node": "^0.1.2"
+  }
 }
