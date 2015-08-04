@@ -25,15 +25,6 @@ command.pushCurentBranch = command.getCurrentBranchName.concat(
 	"xargs git push origin"
 );
 
-var getCurrentBranchName = function(callback) {
-	var child = exec("git branch -l | grep '\*' | sed 's/\*//'", function(err, stdout, stderr) {
-		process.stdout.write(stdout);
-		if (_.isFunction(callback)) {
-			callback();
-		}
-	});
-}
-
 if (userArgs[0] === 'branch') {
 
 	if (userArgs[1] === 'current') {
