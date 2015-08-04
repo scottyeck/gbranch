@@ -1,17 +1,10 @@
 #! /usr/bin/env node
 
-var _ = require("underscore-node"),
-	exec = require("child_process").exec;
+var _ = require('underscore-node'),
+	exec = require("child_process").exec,
+	commander = require('commander');
 
-var userArgs = process.argv.slice(2);
-
-var MODE = require("./src/mode"),
-	Command = require("./src/command");
-
-// Check if user passes along --verbose
-if (_.indexOf(userArgs, "--verbose") > -1) {
-	MODE.enable("verbose");
-}
+var Command = require("./src/command");
 
 var command = {};
 
@@ -25,25 +18,20 @@ command.pushCurentBranch = command.getCurrentBranchName.concat(
 	"xargs git push origin"
 );
 
-if (userArgs[0] === 'branch') {
-
-	if (userArgs[1] === 'current') {
-
-		var childCmd;
-
-		if (userArgs[2] === 'push') {
-			childCmd = command.pushCurentBranch.output();
-		} else {
-			childCmd = command.getCurrentBranchName.output()
-		}
-
-		var child = exec(childCmd, function(err, stdout, stderr) {
+var execs = {
+	getCurrentBranchName: function(callback) {
+		var child = exec(command.getCurrentBranchName.output(), function(err, stdout, stderr) {
 			process.stdout.write(stdout);
+			if (_.isFunction(callback)) {
+				callback();
+			}
 		});
-
-		if (MODE.is('verbose')) {
-			process.stdout.write(childCmd);
-		}
-
 	}
-}
+};
+
+commander
+	// .version
+	.command('name')
+	.action(execs.getCurrentBranchName);
+
+commander.parse(process.argv);
