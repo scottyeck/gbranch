@@ -1,30 +1,31 @@
 {
-  "name": "gitz",
+  "name": "gbranch",
   "version": "1.0.0",
-  "description": "Various silly helper commands for the git CLI.",
+  "description": "A small CLI util for working with the current git branch",
   "main": "index.js",
-  "scripts": {
-    "test": "gitz -v"
-  },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/scottyeck/gitz.git"
+    "url": "git+ssh://git@github.com/scottyeck/gbranch.git"
   },
   "keywords": [
     "git",
+    "gbranch",
+    "branch",
+    "current",
     "CLI",
     "node"
   ],
   "author": "Scotty Eckenthal",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/scottyeck/gitz/issues"
+    "url": "https://github.com/scottyeck/gbranch/issues"
   },
-  "homepage": "https://github.com/scottyeck/gitz#readme",
+  "homepage": "https://github.com/scottyeck/gbranch#readme",
   "bin": {
-    "gitz": "index.js"
+    "gbranch": "index.js"
   },
   "devDependencies": {
+    "commander": "^2.8.1",
     "grunt": "^0.4.5",
     "grunt-contrib-nodeunit": "^0.4.1",
     "grunt-contrib-watch": "^0.6.1",
