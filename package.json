@@ -1,15 +1,15 @@
 {
-  "name": "gbranch",
+  "name": "gcurrent",
   "version": "1.0.0",
   "description": "A small CLI util for working with the current git branch",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/scottyeck/gbranch.git"
+    "url": "git+ssh://git@github.com/scottyeck/gcurrent.git"
   },
   "keywords": [
     "git",
-    "gbranch",
+    "gcurrent",
     "branch",
     "current",
     "CLI",
@@ -18,11 +18,11 @@
   "author": "Scotty Eckenthal",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/scottyeck/gbranch/issues"
+    "url": "https://github.com/scottyeck/gcurrent/issues"
   },
-  "homepage": "https://github.com/scottyeck/gbranch#readme",
+  "homepage": "https://github.com/scottyeck/gcurrent#readme",
   "bin": {
-    "gbranch": "index.js"
+    "gcurrent": "index.js"
   },
   "devDependencies": {
     "commander": "^2.8.1",
