@@ -1,15 +1,16 @@
 {
-  "name": "gcurrent",
+  "name": "grit",
   "version": "1.0.0",
-  "description": "A small CLI util for working with the current git branch",
+  "description": "A greppy git",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/scottyeck/gcurrent.git"
+    "url": "git+ssh://git@github.com/scottyeck/grit.git"
   },
   "keywords": [
     "git",
-    "gcurrent",
+    "grep",
+    "grit",
     "branch",
     "current",
     "CLI",
@@ -18,11 +19,11 @@
   "author": "Scotty Eckenthal",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/scottyeck/gcurrent/issues"
+    "url": "https://github.com/scottyeck/grit/issues"
   },
-  "homepage": "https://github.com/scottyeck/gcurrent#readme",
+  "homepage": "https://github.com/scottyeck/grit#readme",
   "bin": {
-    "gcurrent": "index.js"
+    "grit": "index.js"
   },
   "devDependencies": {
     "commander": "^2.8.1",
