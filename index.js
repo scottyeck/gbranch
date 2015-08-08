@@ -1,37 +1,39 @@
 #! /usr/bin/env node
 
 var _ = require('underscore-node'),
-	exec = require("child_process").exec,
-	commander = require('commander');
+	exec = require('child_process').exec,
+	program = require('commander');
 
-var Command = require("./src/command");
+var CliCmd = require('./src/cli-cmd.js')
 
-var command = {};
+var getBranchSearchCmd = function(grepStr) {
 
-command.getCurrentBranchName = new Command(
-	"git branch -l",
-	"grep '\\*'",
-	"sed 's/\\*//'"
-);
+	var cmd = new CliCmd();
 
-command.pushCurentBranch = command.getCurrentBranchName.concat(
-	"xargs git push origin"
-);
+	cmd.set("git branch -l")
+		.pipe("grep '" + grepStr + "'")
+		.pipe("sed 's/\\*//'");
 
-var execs = {
-	getCurrentBranchName: function(callback) {
-		var child = exec(command.getCurrentBranchName.output(), function(err, stdout, stderr) {
-			process.stdout.write(stdout);
-			if (_.isFunction(callback)) {
-				callback();
-			}
-		});
-	}
-};
+	return cmd;
+}
 
-commander
+program
 	// .version
-	.command('name')
-	.action(execs.getCurrentBranchName);
+	.option('-c --current', 'Current branch')
+	.option('-f --force', 'force push');
 
-commander.parse(process.argv);
+program
+	.command('branch')
+	.action(function() {
+		var cmd, grepStr;
+		if (this.parent.current) {
+			cmd = getBranchSearchCmd('\*')
+		} else {
+			grepStr = this.parent.args[0];
+			cmd = getBranchSearchCmd(grepStr);
+		}
+
+		cmd.exec();
+	});
+
+program.parse(process.argv);

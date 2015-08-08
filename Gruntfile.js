@@ -12,27 +12,27 @@ module.exports = function (grunt) {
 			}
 		},
 
-		nodeunit: {
-			all: ['test/**/*.js', '!Gruntfile.js'],
+		jasmine_node: {
 			options: {
-				reporter: 'verbose'
-			}
+				forceExit: true
+			},
+			all: ['test/']
 		},
 
 		notify_hooks: {
 			options: {
 				enabled: true,
 				max_jshint_notifications: 5, // maximum number of notifications from jshint output
-				title: "UI Toolkit", // defaults to the name in package.json, or will use project directory's name
+				title: "grit", // defaults to the name in package.json, or will use project directory's name
 				success: true, // whether successful grunt executions should be notified automatically
 				duration: 3 // the duration of notification in seconds, for `notify-send only
 			}
 		},
 
 		notify: {
-			nodeunit: {
+			jasmine_node: {
 				options: {
-					title: 'Nodeunit task complete...',
+					title: 'jasmine-node',
 					message: 'All tests passed!'
 				}
 			}
@@ -40,8 +40,8 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('test-run', [
-		'nodeunit:all',
-		'notify:nodeunit'
+		'jasmine_node',
+		'notify:jasmine_node'
 	]);
 
 	grunt.registerTask('test-watch', [
