@@ -5,27 +5,27 @@ var _ = require('underscore-node'),
 
 var verifyMatches = require('./verify-matches.js');
 
-function CliCmd(newStr) {
+function PrivateCliCmd(newStr) {
 	this.execStr = newStr;
 	return this;
 }
 
-CliCmd.prototype.get = function() {
+PrivateCliCmd.prototype.get = function() {
 	return this.execStr;
 };
 
-CliCmd.prototype.set = function(newStr) {
+PrivateCliCmd.prototype.set = function(newStr) {
 	this.execStr = newStr;
 	return this;
 };
 
-CliCmd.prototype.pipe = function(pipeStr) {
+PrivateCliCmd.prototype.pipe = function(pipeStr) {
 	var newStr = [this.get(), pipeStr].join(' | ');
 	this.set(newStr);
 	return this;
 };
 
-CliCmd.prototype.grep = function(grepStr) {
+PrivateCliCmd.prototype.grep = function(grepStr) {
 	var pipeStr = 'grep \'' + grepStr + '\'';
 	this.pipe(pipeStr)
 		.pipe("sed 's/\\*//'");
@@ -35,13 +35,7 @@ CliCmd.prototype.grep = function(grepStr) {
 	return this;
 }
 
-CliCmd.prototype.clone = function() {
-	var result = new CliCmd();
-	result.set(this.get());
-	return result;
-};
-
-CliCmd.prototype.exec = function() {
+PrivateCliCmd.prototype.exec = function() {
 	if (!this.isValid) {
 		return;
 	}
@@ -57,6 +51,23 @@ CliCmd.prototype.exec = function() {
 			process.stdout.write(result.stdout);
 		}
 	}
+};
+
+function CliCmd(newStr) {
+
+	var instance = new PrivateCliCmd(newStr);
+
+	this.get = instance.get.bind(instance);
+	this.set = instance.set.bind(instance);
+	this.pipe = instance.pipe.bind(instance);
+	this.grep = instance.grep.bind(instance);
+	this.exec = instance.exec.bind(instance);
+}
+
+CliCmd.prototype.clone = function() {
+	var result = new CliCmd();
+	result.set(this.get());
+	return result;
 };
 
 module.exports = CliCmd;
