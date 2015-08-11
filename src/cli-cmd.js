@@ -31,6 +31,9 @@ CliCmd.prototype.clone = function() {
 
 CliCmd.prototype.exec = function() {
 	var child = exec(this.get(), function(err, stdout, stderr) {
+		if (stderr) {
+			process.stdout.write(stderr);
+		}
 		process.stdout.write(stdout);
 	});
 };
