@@ -36,7 +36,21 @@ No fun. I know the ticket number for this branch, so I'd just prefer to type
 
 ## How do I use it?
 
-*FYI: Actual manual to follow soon.*
+*FYI: Actual manual / npm registry installation to follow soon.*
+
+### Installation
+
+Either
+
+	git clone git@github.com:scottyeck/grit.git
+	cd grit
+	npm link
+
+Or
+	
+	npm install -g git@github.com:scottyeck/grit.git
+
+### Usage
 
 	# BRANCH NAMES														#
 	#####################################################################
