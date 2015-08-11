@@ -69,4 +69,16 @@ program
 		cmd.exec();
 	});
 
+program
+	.command('merge')
+	.action(function() {
+		var cmd, grepStr;
+
+		grepStr = this.parent.args[0];
+		cmd = getBranchSearchCmd(grepStr);
+
+		cmd.pipe('xargs git merge');
+		cmd.exec();
+	});
+
 program.parse(process.argv);
