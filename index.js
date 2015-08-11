@@ -56,4 +56,17 @@ program
 		cmd.pipe(cmdStr);
 		cmd.exec();
 	});
+
+program
+	.command('checkout')
+	.action(function() {
+		var cmd, grepStr;
+
+		grepStr = this.parent.args[0];
+		cmd = getBranchSearchCmd(grepStr);
+
+		cmd.pipe('xargs git checkout');
+		cmd.exec();
+	});
+
 program.parse(process.argv);
