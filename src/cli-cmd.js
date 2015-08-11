@@ -1,7 +1,9 @@
 'use strict';
 
 var _ = require('underscore-node'),
-	exec = require('child_process').exec;
+	execSync = require('child_process').execSync;
+
+var verifyMatches = require('./verify-matches.js');
 
 function CliCmd(newStr) {
 	this.execStr = newStr;
@@ -23,6 +25,16 @@ CliCmd.prototype.pipe = function(pipeStr) {
 	return this;
 };
 
+CliCmd.prototype.grep = function(grepStr) {
+	var pipeStr = 'grep \'' + grepStr + '\'';
+	this.pipe(pipeStr)
+		.pipe("sed 's/\\*//'");
+
+	this.isValid = verifyMatches(this.get(), grepStr);
+
+	return this;
+}
+
 CliCmd.prototype.clone = function() {
 	var result = new CliCmd();
 	result.set(this.get());
@@ -30,12 +42,21 @@ CliCmd.prototype.clone = function() {
 };
 
 CliCmd.prototype.exec = function() {
-	var child = exec(this.get(), function(err, stdout, stderr) {
-		if (stderr) {
-			process.stdout.write(stderr);
+	if (!this.isValid) {
+		return;
+	}
+
+	var result = execSync(this.get(), {encoding: 'utf-8'});
+	if (_.isString(result)) {
+		process.stdout.write(result);
+	} else if (_.isObject) {
+		if (result.stderr) {
+			process.stderr.write(result.stderr);
 		}
-		process.stdout.write(stdout);
-	});
+		if (result.stdout) {
+			process.stdout.write(result.stdout);
+		}
+	}
 };
 
 module.exports = CliCmd;

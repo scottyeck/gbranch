@@ -2,26 +2,28 @@
 
 var _ = require('underscore-node'),
 	exec = require('child_process').exec,
+	execSync = require('child_process').execSync,
 	program = require('commander'),
 	pkg = require('./package.json');
 
-var CliCmd = require('./src/cli-cmd.js')
+var CliCmd = require('./src/cli-cmd.js');
 
-var getBranchSearchCmd = function(_grepStr) {
-
+var getBranchSearchCmd = function(_grepStr, parent) {
 	var cmd = new CliCmd();
-
-	if (this.parent && this.parent.current) {
-		grepStr = '\*';
-	} else {
-		grepStr = _grepStr;
-	}
-
 	cmd.set("git branch -l")
-		.pipe("grep '" + grepStr + "'")
-		.pipe("sed 's/\\*//'");
+		.grep(grepStr);
 
 	return cmd;
+}
+
+var getGrepStr = function(parent) {
+	if (parent.current) {
+		grepStr = '\*';
+	} else {
+		grepStr = parent.args[0];
+	}
+
+	return grepStr;
 }
 
 program
@@ -32,15 +34,14 @@ program
 program
 	.command('branch')
 	.action(function() {
-		var grepStr = this.parent.args[0],
-			cmd = getBranchSearchCmd(grepStr);
-		cmd.exec();
+		var grepStr = getGrepStr(this.parent);
+		getBranchSearchCmd(grepStr).exec();
 	});
 
 program
 	.command('push')
 	.action(function() {
-		var grepStr = this.parent.args[0],
+		var grepStr = getGrepStr(this.parent),
 			cmd = getBranchSearchCmd(grepStr);
 
 		var cmdStr = 'xargs git push origin';
@@ -55,7 +56,7 @@ program
 program
 	.command('checkout')
 	.action(function() {
-		var grepStr = this.parent.args[0],
+		var grepStr = getGrepStr(this.parent),
 			cmd = getBranchSearchCmd(grepStr);
 
 		cmd.pipe('xargs git checkout');
@@ -65,7 +66,7 @@ program
 program
 	.command('merge')
 	.action(function() {
-		var grepStr = this.parent.args[0],
+		var grepStr = getGrepStr(this.parent),
 			cmd = getBranchSearchCmd(grepStr);
 
 		cmd.pipe('xargs git merge');
