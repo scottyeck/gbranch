@@ -36,4 +36,24 @@ program
 		cmd.exec();
 	});
 
+program
+	.command('push')
+	.action(function() {
+		var cmd, grepStr;
+		if (this.parent.current) {
+			cmd = getBranchSearchCmd('\*')
+		} else {
+			grepStr = this.parent.args[0];
+			cmd = getBranchSearchCmd(grepStr);
+		}
+
+		var cmdStr = 'xargs git push origin';
+
+		if (this.parent.force) {
+			cmdStr += ' --force'
+		}
+
+		cmd.pipe(cmdStr);
+		cmd.exec();
+	});
 program.parse(process.argv);
