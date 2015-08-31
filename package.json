@@ -1,0 +1,36 @@
+{
+  "name": "grit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "unit": "jasmine-node test"
+  },
+  "url": "git+ssh://git@github.com/scottyeck/grit.git",
+  "author": "Scotty Eckenthal",
+  "keywords": [
+    "git",
+    "grep",
+    "grit",
+    "branch",
+    "current",
+    "CLI",
+    "node"
+  ],
+  "author": "Scotty Eckenthal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scottyeck/grit/issues"
+  },
+  "homepage": "https://github.com/scottyeck/grit#readme",
+  "bin": {
+    "grit": "index.js"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5"
+  },
+  "dependencies": {
+  	"underscore-node": "^0.1.2",
+  	"yargs": "^3.21.0"
+  }
+}
